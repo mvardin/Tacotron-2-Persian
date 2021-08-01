@@ -3,6 +3,7 @@ import numpy as np
 import librosa
 import argparse
 import os
+import soundfile as sf
 from tac2persian.utils.generic import load_config
 from tac2persian.utils.g2p.g2p import Grapheme2Phoneme
 from tac2persian.models.tacotron2 import Tacotron2
@@ -86,7 +87,10 @@ def main(args):
     
     # Save wave
     wav_path = os.path.join(args.output_path, args.filename + ".wav")
-    librosa.output.write_wav(wav_path, out_wav, params_wavernn["audio"]["sample_rate"])
+    
+    #Ardin
+    sf.write(wav_path, out_wav, params_wavernn["audio"]["sample_rate"])
+    #librosa.output.write(wav_path, out_wav, params_wavernn["audio"]["sample_rate"])
 
     # Save attention
     attn_path = os.path.join(args.output_path, args.filename + "_attn")

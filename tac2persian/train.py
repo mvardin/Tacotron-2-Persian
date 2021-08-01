@@ -203,7 +203,7 @@ class TacotronTrainer():
 
 def main(args):
     # Load config
-    config_file_path = os.path.join(args.config_path, "config.yml")
+    config_file_path = os.path.join(args.config_path, "config_train.yml")
     config = load_config(config_file_path)
     
     # Set number of characters
