@@ -1,4 +1,4 @@
-
+import traceback
 import argparse
 import os
 import shutil
@@ -11,6 +11,13 @@ from tac2persian.utils.g2p.g2p import Grapheme2Phoneme
 from tac2persian.utils.audio import log_melspectrogram, trim_silence
 
 
+def log_traceback(ex):
+    tb_lines = traceback.format_exception(ex.__class__, ex, ex.__traceback__)
+    tb_text = ''.join(tb_lines)
+    # I'll let you implement the ExceptionLogger class,
+    # and the timestamping.
+    print(tb_text)
+    
 def normalize_text(text):
     if text[-1] not in [".", "!", "?"]:
         text = text + "."
@@ -39,9 +46,11 @@ def compute_features(source_audio_path,
         meta_line = f"{file_name}|{speaker_name}|{text}|{phoneme}|{melspec.shape[1]}|{phoneme_idx}"
         
         return meta_line
-    except:
+    except Exception as ex:
+        print("=======================")
         print(f"Error in processing {file_name}")
-        
+        log_traceback(ex)
+        print("=======================")
         return None
 
 def preprocess(dataset_path, output_path, target_speakers, config, num_workers):
@@ -74,7 +83,7 @@ def preprocess(dataset_path, output_path, target_speakers, config, num_workers):
         lines = all_lines_final[speaker]
         count_files = len(lines)
 
-        for itr, line in enumerate(lines[:20]):
+        for itr, line in enumerate(lines):
             file_name, text = line
             file_name_ = speaker_name + "_" + file_name.split(".")[0]
             source_audio_path = os.path.join(dataset_path, "clips", file_name)
@@ -93,9 +102,10 @@ def preprocess(dataset_path, output_path, target_speakers, config, num_workers):
     print(metafile)
     
     # Write metafile
+    # Ardin
     with open(os.path.join(output_path, "metadata.txt"), "w") as final_meta:
         for l in metafile:
-            final_meta.write(l + "\n")
+            final_meta.write(str(l) + "\n")
     
 
 if __name__ == "__main__":
@@ -105,7 +115,11 @@ if __name__ == "__main__":
     parser.add_argument("--config_path", type=str, required=True)
     parser.add_argument("--num_workers", type=int, default=5)
     args = parser.parse_args()
-    target_speakers = ["0d358649ded3baf7f476eeb2ba44fc2cfc195824b0294fcb4a2059c4e6a2e6ab1aede4dd71f5df11fb4550d6db6ee9e45244180d9692ea897afb86cc0471caa0"]
+ 
+    target_speakers = ["13cfe4a65ef3b101f373367716ac86515e41e3809da5754beb3536788346efb7096c6905cc42be10872089028ff1e1a04722dc2b23cc3f16acfa7ef73a2758b4"]
 
-    config = load_config(os.path.join(args.config_path, "config.yml"))
+    config = load_config(os.path.join(args.config_path, "config_preprocess.yml"))
     preprocess(args.dataset_path, args.output_path, target_speakers, config, args.num_workers)
+    
+    
+    
