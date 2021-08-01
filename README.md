@@ -19,3 +19,10 @@
 9- run generate.sh
 
 10- done
+
+
+** in windows client , use this line 
+
+with open(os.path.join(dataset_path, "validated.tsv"), encoding="utf8") as f:
+
+in tac2persian/data_preprocessing/preprocess_commonvoice_fa.py line 50
