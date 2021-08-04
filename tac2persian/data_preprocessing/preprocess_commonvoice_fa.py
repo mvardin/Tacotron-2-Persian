@@ -114,12 +114,10 @@ if __name__ == "__main__":
     parser.add_argument("--output_path", type=str, required=True)
     parser.add_argument("--config_path", type=str, required=True)
     parser.add_argument("--num_workers", type=int, default=5)
+    parser.add_argument("--speaker", type=str, default="c02a93dd88299382b1f6efb2e26be36c9080c26ceafaae4f3d02f6f052a24f011ab053ea0ec2cc6e81a3f07fcaa6c8e23be42f8cb3e695176c99b5aba1f3fdd4")
     args = parser.parse_args()
  
-    target_speakers = ["13cfe4a65ef3b101f373367716ac86515e41e3809da5754beb3536788346efb7096c6905cc42be10872089028ff1e1a04722dc2b23cc3f16acfa7ef73a2758b4"]
+    target_speakers = [args.speaker]
 
     config = load_config(os.path.join(args.config_path, "config_preprocess.yml"))
     preprocess(args.dataset_path, args.output_path, target_speakers, config, args.num_workers)
-    
-    
-    
