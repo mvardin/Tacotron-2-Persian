@@ -210,7 +210,7 @@ def main(args):
     config["model"]["num_chars"] = len(char_list)
     
     # Path manager
-    output_path = os.path.join(config["output_path"], config["run_name"])
+    output_path = os.path.join(args.output_path, config["run_name"])
     path_manager = PathManager(output_path)
 
     # Model
@@ -224,9 +224,8 @@ def main(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--config_path", type=str, required=True)
+    parser.add_argument("--output_path", type=str, required=True)
     parser.add_argument("--last_epoch", type=int, default=0)
-
     
     args = parser.parse_args()
-
     main(args)
