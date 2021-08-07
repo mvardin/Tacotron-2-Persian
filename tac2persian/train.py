@@ -88,7 +88,7 @@ class TacotronTrainer():
         return loss, l1_loss, mse_loss, bce_loss
 
     def train(self):
-        for epoch in range(self.config["epochs"]):
+        for epoch in range(args.last_epoch , self.config["epochs"]):
             self._train_epoch(epoch)
             self._eval_epoch(epoch)
             
@@ -102,7 +102,7 @@ class TacotronTrainer():
         for itr, (batch_items) in enumerate(self.train_loader, 1):
             item_id, inp_chars, chars_len, mel, mel_len, speaker_id, stop_labels = batch_items
             # Transfer batch items to compute_device
-            inp_chars, chars_len, mel, mel_len  = inp_chars.to(device), chars_len.to(device), mel.to(device), mel_len.to(device)
+            inp_chars, chars_len, mel, mel_len = inp_chars.to(device), chars_len.to(device), mel.to(device), mel_len.to(device)
             speaker_id, stop_labels = speaker_id.to(device), stop_labels.to(device)
             
             # Feed inputs to the model
@@ -156,7 +156,7 @@ class TacotronTrainer():
                   f'mse: {mse_loss:#.4} | bce: {bce_loss:#.4} | step: {step_k}k'
             stream(msg)
 
-        # Save checkpoint after each epoch    
+        # Save checkpoint after each epoch
         self._save_checkpoint()
 
     def _eval_epoch(self, epoch):
@@ -170,7 +170,7 @@ class TacotronTrainer():
             for itr, (batch_items) in enumerate(self.eval_loader, 1):
                 item_id, inp_chars, chars_len, mel, mel_len, speaker_id, stop_labels = batch_items
                 # Transfer batch items to compute_device
-                inp_chars, chars_len, mel, mel_len  = inp_chars.to(device), chars_len.to(device), mel.to(device), mel_len.to(device)
+                inp_chars, chars_len, mel, mel_len = inp_chars.to(device), chars_len.to(device), mel.to(device), mel_len.to(device)
                 speaker_id, stop_labels = speaker_id.to(device), stop_labels.to(device)
                 
                 # Feed inputs to the model
@@ -224,6 +224,9 @@ def main(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--config_path", type=str, required=True)
+    parser.add_argument("--last_epoch", type=int, default=0)
+
+    
     args = parser.parse_args()
 
     main(args)
