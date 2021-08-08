@@ -88,7 +88,8 @@ class TacotronTrainer():
         return loss, l1_loss, mse_loss, bce_loss
 
     def train(self):
-        for epoch in range(args.last_epoch , self.config["epochs"]):
+        start_epoch = self.model.get_step() // 1000
+        for epoch in range(start_epoch , self.config["epochs"]):
             self._train_epoch(epoch)
             self._eval_epoch(epoch)
             
@@ -216,6 +217,10 @@ def main(args):
     # Model
     model = Tacotron2(**config["model"])
 
+    # Load checkpoint if checkpoint_path given:
+    if args.checkpoint_path is not None or args.checkpoint_path != "":
+        model.load_state_dict(torch.load(args.checkpoint_path, map_location=torch.device("cpu")))
+
     # Trainer
     trainer = TacotronTrainer(config, path_manager, model)
     trainer.train()
@@ -224,8 +229,8 @@ def main(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--config_path", type=str, required=True)
-    parser.add_argument("--output_path", type=str, required=True)
     parser.add_argument("--last_epoch", type=int, default=0)
-    
+    parser.add_argument("--checkpoint_path", type=str, required=False)
+
     args = parser.parse_args()
     main(args)
