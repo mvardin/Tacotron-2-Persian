@@ -218,7 +218,7 @@ def main(args):
     model = Tacotron2(**config["model"])
 
     # Load checkpoint if checkpoint_path given:
-    if args.checkpoint_path is not None or args.checkpoint_path != "":
+    if args.checkpoint_path != "":
         model.load_state_dict(torch.load(args.checkpoint_path, map_location=torch.device("cpu")))
 
     # Trainer
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--config_path", type=str, required=True)
     parser.add_argument("--output_path", type=str, required=True)
-    parser.add_argument("--checkpoint_path", type=str, required=False)
+    parser.add_argument("--checkpoint_path", type=str, required=True)
 
     args = parser.parse_args()
     main(args)

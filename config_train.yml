@@ -48,7 +48,7 @@ bce_pos_weight: 1.0
 
 # Output parameters
 output_path: "/home/mvardin/Workarea/speakers/man1"
-run_name: "commonvoice_fa"
+run_name: "trained"
 
 # Data Parameters
 num_workers: 3
