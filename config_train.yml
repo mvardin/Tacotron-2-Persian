@@ -47,14 +47,14 @@ use_weighted_masking: True
 bce_pos_weight: 1.0
 
 # Output parameters
-output_path: "/home/mvardin/Workarea"
+output_path: "/home/mvardin/Workarea/speakers/man1"
 run_name: "commonvoice_fa"
 
 # Data Parameters
 num_workers: 3
 datasets:
   commonvoice_fa:
-    dataset_path: "/home/mvardin/Workarea/ppoutput"
+    dataset_path: "/home/mvardin/Workarea/speakers/man1/ppoutput"
     max_mel_len: 1000
     train_metafile: "metadata_train.txt"
     eval_metafile: "metadata_train.txt"                      

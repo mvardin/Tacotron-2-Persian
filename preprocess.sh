@@ -1,7 +1,7 @@
 #! /bin/bash
 
 DATASET_PATH="/home/mvardin/Tacotron-2-Persian/Corpus/fa"
-OUTPUT_PATH="/home/mvardin/Workarea/ppoutput"
+OUTPUT_PATH="/home/mvardin/Workarea/speakers/man1/ppoutput"
 CONFIG_PATH="/home/mvardin/Workarea/Tacotron-2-Persian"
 NUM_WORKERS=32
 SPEACKER="045313dea664e9b5cfc4bd4b0211b1517740f736ca6204255180d0216644a3b23da079514e084f3562fb92e41f853d14c82bb8c8b9241aa190c7509133573655"
