@@ -210,10 +210,14 @@ def main(args):
     # Set number of characters
     config["model"]["num_chars"] = len(char_list)
 
+    # Set batch_size from args
+    if args.batch_size != "":
+        config["batch_size"] = args.batch_size
+
     # Set datset path from args
     if args.dataset_path != "":
         config["datasets"]["commonvoice_fa"]["dataset_path"] = args.dataset_path
-    
+
     # Path manager
     output_path = os.path.join(args.output_path, config["run_name"])
     path_manager = PathManager(output_path)
@@ -236,6 +240,7 @@ if __name__ == "__main__":
     parser.add_argument("--output_path", type=str, required=True)
     parser.add_argument("--checkpoint_path", type=str, required=True)
     parser.add_argument("--dataset_path", type=str, required=True)
+    parser.add_argument("--batch_size", type=int, required=True)
 
     args = parser.parse_args()
     main(args)
