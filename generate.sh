@@ -1,21 +1,19 @@
 #! /bin/bash
 
-# get path to config file
-full_path=$0
-CONFIG_PATH=$(dirname "$full_path")
-echo $CONFIG_PATH
+wavernn_config_path="/home/mvardin/Workarea/speakers/Tools/config_wavernn.yml"
+wavernn_checkpoint_path="/home/mvardin/Workarea/speakers/Tools/ckpt_wavernn_libritts.pt"
+tacotron_config_path="/home/mvardin/Workarea/speakers/Tools/config_tacotron.yml"
+tacotron_checkpoint_path="/home/mvardin/Workarea/speakers/Checkpoints/Man2.pt"
+lang="fa"
+output_path="/home/mvardin/Workarea/speakers/outputs"
+filename="01.wav"
+inp_text="سلام آریا؛ من ربات هستم؛ توسط بابات ساخته شدم."
 
-
-CHECKPOINT_ID="100"
-
-SPEAKER=""
-LANGUAGE="fa"
-
-INP_TEXT="دلا نزدِ کسی بنشین که او از دل خبر دارد."
-
-
-python -m TTS.acoustic_model.tacotron2.generate --config_path="$CONFIG_PATH" \
-                                                --checkpoint_id="$CHECKPOINT_ID" \
-                                                --speaker="$SPEAKER" \
-                                                --language="$LANGUAGE" \
-                                                --text="$TEXT"
+python -m tac2persian.generate --wavernn_config_path="$wavernn_config_path" \
+                                                --wavernn_checkpoint_path="$wavernn_checkpoint_path" \
+                                                --tacotron_config_path="$tacotron_config_path" \
+                                                --tacotron_checkpoint_path="$tacotron_checkpoint_path" \
+                                                --lang="$lang" \
+                                                --output_path="$output_path" \
+                                                --filename="$filename" \
+                                                --inp_text="$inp_text" \
