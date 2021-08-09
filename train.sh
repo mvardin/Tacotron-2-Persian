@@ -5,4 +5,12 @@ full_path=$0
 CONFIG_PATH=$(dirname "$full_path")
 echo $CONFIG_PATH
 
-python -m tac2persian.train --config_path="$CONFIG_PATH" --output_path="/home/mvardin/Workarea/speakers/man1" --checkpoint_path=""
+output_path="/home/mvardin/Workarea/speakers/man1"
+checkpoint_path="/home/mvardin/Workarea/speakers/man1/trained/checkpoints/checkpoint_0K.pt"
+dataset_path="/home/mvardin/Workarea/speakers/man1/ppoutput"
+
+
+python -m tac2persian.train --config_path="$CONFIG_PATH" \
+                            --output_path="$output_path" \
+                            --checkpoint_path="$checkpoint_path" \
+                            --dataset_path="$dataset_path"

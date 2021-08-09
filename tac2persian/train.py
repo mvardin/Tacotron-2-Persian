@@ -209,6 +209,10 @@ def main(args):
     
     # Set number of characters
     config["model"]["num_chars"] = len(char_list)
+
+    # Set datset path from args
+    if args.dataset_path != "":
+        config["datasets"]["commonvoice_fa"]["dataset_path"] = args.dataset_path
     
     # Path manager
     output_path = os.path.join(args.output_path, config["run_name"])
@@ -231,6 +235,7 @@ if __name__ == "__main__":
     parser.add_argument("--config_path", type=str, required=True)
     parser.add_argument("--output_path", type=str, required=True)
     parser.add_argument("--checkpoint_path", type=str, required=True)
+    parser.add_argument("--dataset_path", type=str, required=True)
 
     args = parser.parse_args()
     main(args)
