@@ -6,7 +6,7 @@ tacotron_config_path="/home/mvardin/Workarea/speakers/Tools/config_tacotron.yml"
 tacotron_checkpoint_path="/home/mvardin/Workarea/speakers/Checkpoints/Woman1.pt"
 lang="fa"
 output_path="/home/mvardin/Workarea/speakers/outputs"
-filename="02"
+filename="03"
 inp_text="سلام آریا؛ من ربات هستم؛ توسط بابات ساخته شدم."
 
 python -m tac2persian.generate --wavernn_config_path="$wavernn_config_path" \

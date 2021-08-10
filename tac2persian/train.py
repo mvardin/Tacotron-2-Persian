@@ -206,6 +206,8 @@ def main(args):
     # Load config
     config_file_path = os.path.join(args.config_path, "config_train.yml")
     config = load_config(config_file_path)
+
+    last_checkpoint = get_last_checkpoint(args.checkpoint_path)
     
     # Set number of characters
     config["model"]["num_chars"] = len(char_list)
@@ -214,7 +216,7 @@ def main(args):
     if args.batch_size != "":
         config["batch_size"] = args.batch_size
 
-    # Set datset path from args
+    # Set dataset path from args
     if args.dataset_path != "":
         config["datasets"]["commonvoice_fa"]["dataset_path"] = args.dataset_path
 
@@ -226,15 +228,27 @@ def main(args):
     model = Tacotron2(**config["model"])
 
     # Load checkpoint if checkpoint_path given:
-    if args.checkpoint_path != "":
-        model.load_state_dict(torch.load(args.checkpoint_path, map_location=torch.device("cpu")))
+    if last_checkpoint != "":
+        model.load_state_dict(torch.load(last_checkpoint, map_location=torch.device("cpu")))
 
     # Trainer
     trainer = TacotronTrainer(config, path_manager, model)
     trainer.train()
 
 
+def get_last_checkpoint(path):
+    last_checkpoint = ""
+    for file in os.listdir(path):
+        if os.path.isfile(os.path.join(path, file)):
+            if last_checkpoint == "":
+                last_checkpoint = file
+            if file > last_checkpoint:
+                last_checkpoint = file
+    return last_checkpoint
+
+
 if __name__ == "__main__":
+
     parser = ArgumentParser()
     parser.add_argument("--config_path", type=str, required=True)
     parser.add_argument("--output_path", type=str, required=True)

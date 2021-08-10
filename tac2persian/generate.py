@@ -99,9 +99,10 @@ def main(args):
     # Save melspec
     melspec_path = os.path.join(args.output_path, args.filename + "_mel")
     plot_spectrogram(melspec, melspec_path)
-    
+
 
 if __name__ == "__main__":
+
     # Parse Arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--wavernn_config_path", type=str)
