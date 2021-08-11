@@ -244,6 +244,8 @@ def get_last_checkpoint(path):
                 last_checkpoint = file
             if file > last_checkpoint:
                 last_checkpoint = file
+
+    last_checkpoint = path + "/" + last_checkpoint
     return last_checkpoint
 
 
